@@ -30,5 +30,9 @@
 }
 
 .custom-height {
-    height: calc(100vh - 160px);
+    height: calc(100vh - 400px);
+}
+
+#people-outline {
+    font-size: 30px;
 }
