@@ -17,7 +17,7 @@ const Index = () => {
         setActive(false);
         setTimeout(() => {
             setMenu(false);
-        }, 200);
+        }, 400);
     };
 
     useEffect(() => {
@@ -95,9 +95,63 @@ const Index = () => {
                             onMouseLeave={handleMouseLeave}
                         >
                             {active != false ? (
-                                <div class="absolute w-[300px] h-[200px] right-[20px] top-[60px] bg-black animate-fade-in-down"></div>
+                                <div class="absolute w-[300px] h-[350px] right-[20px] top-[60px] p-4 bg-black animate-fade-in-down">
+                                    <div class="flex w-full flex-col  justify-between items-center">
+                                        <div class="flex w-full  h-10 justify-between items-center pb-2 border-b-[1px] border-white">
+                                            <div class="text-white text-[17px]">
+                                                Sign in
+                                            </div>
+                                            <a href="">
+                                                <button class=" text-[#FFD700] text-[14px] hover:text-[#DAA520]">
+                                                    Create an Account
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="flex flex-col w-full h-[300px]">
+                                            <div class="text-white mt-4">
+                                                E-mail
+                                            </div>
+                                            <input
+                                                type="text"
+                                                class="input-menu"
+                                            />
+                                            <div class="text-white mt-4">
+                                                Password
+                                            </div>
+                                            <input
+                                                type="password"
+                                                class="input-menu"
+                                            />
+                                            <a href="">
+                                                <button class="w-full h-10 mt-4 text-[14px] text-white bg-red-500 flex justify-center items-center">
+                                                    LOG IN
+                                                </button>
+                                            </a>
+
+                                            <div class="flex w-full  h-12 justify-between items-center mt-3 pb-2 ">
+                                                <input
+                                                    type="checkbox"
+                                                    id=""
+                                                    name="remeber"
+                                                    value="Rememberme"
+                                                />
+                                                <label
+                                                    for="remeber"
+                                                    class="text-[13px] mr-[30px] text-white"
+                                                >
+                                                    Remember me
+                                                </label>
+                                                <a href="">
+                                                    <button class=" text-[#FFD700] text-[14px] hover:text-[#DAA520]">
+                                                        Lost your password?
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             ) : (
-                                <div class="absolute w-[300px] h-[200px] right-[20px] top-[60px] bg-black animate-fade-in-up"></div>
+                                <div class="absolute w-[300px] h-[350px] right-[20px] top-[60px] bg-black animate-fade-in-up"></div>
                             )}
                         </div>
                     )}

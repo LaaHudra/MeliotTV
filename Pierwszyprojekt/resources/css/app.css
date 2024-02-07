@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.input-menu {
+    @apply p-3 m-1 h-[35px]  bg-transparent text-[14px] text-gray-300 rounded-[25px] border shadow-lg;
+}
+
 .underline-animation {
     position: relative;
     overflow: hidden;
