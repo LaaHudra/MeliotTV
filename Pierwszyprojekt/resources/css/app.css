@@ -2,8 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+h2 {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+a {
+    color: #676767;
+}
+
 .input-menu {
     @apply p-3 m-1 h-[35px]  bg-transparent text-[14px] text-gray-300 rounded-[25px] border shadow-lg;
+}
+
+.input-normal {
+    @apply p-3 m-1 h-[35px] bg-white text-[14px] text-gray-600 rounded-[4px];
 }
 
 .underline-animation {

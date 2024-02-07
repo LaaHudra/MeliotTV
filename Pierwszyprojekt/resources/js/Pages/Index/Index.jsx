@@ -51,6 +51,12 @@ const Index = () => {
         { id: 3, name: "Lorem Ipsum", content: "Lorem Ipsum 3" },
     ];
 
+    const aboutUs = [
+        { id: 1, name: "Lorem Ipsum", content: "Lorem Ipsum 1" },
+        { id: 2, name: "Lorem Ipsum", content: "Lorem Ipsum 2" },
+        { id: 3, name: "Lorem Ipsum", content: "Lorem Ipsum 3" },
+    ];
+
     return (
         <body>
             <nav class="flex flex-row justify-between items-center w-full h-20  gap-4 pr-[120px] pl-[120px]">
@@ -181,9 +187,9 @@ const Index = () => {
                     <div class="bg-black p-2 mt-10">{tvlist}</div>
                 </div>
             </div>
-            <div class="flex justify-center items-center w-full h-auto mt-[100px] p-10 ">
+            <div class="flex justify-center items-center w-full h-auto mt-[20px] p-10 ">
                 <div className="flex flex-col w-full  ">
-                    {divsData.map(({ id, name, content }) => (
+                    {aboutUs.map(({ id, name, content }) => (
                         <div key={id} className="my-2 w-full">
                             <div
                                 className="px-4 py-2  text-gray-400 w-full  cursor-pointer  border-b-2 border-gray-300"
@@ -205,7 +211,7 @@ const Index = () => {
 
                                 {name}
                             </div>
-                            {openDivs.includes(id) && (
+                            {aboutUs.includes(id) && (
                                 <div className="mt-2 p-4 text-[14px] text-gray-400">
                                     {content}
                                 </div>
@@ -214,7 +220,82 @@ const Index = () => {
                     ))}
                 </div>
             </div>
-            <footer class="bg-black w-full h-[220px]"></footer>
+
+            <div class=" w-full h-[500px] mt-[20px]  flex justify-center items-center">
+                <div class="w-2/3 flex">
+                    <div class=" h-[500px] w-1/2  ">
+                        <div class="flex flex-col mr-10 ml-10 items-center p-10">
+                            <h2>Contat us</h2>
+                            <a class="mb-4">
+                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+                            </a>
+                            <input
+                                class="input-normal  w-full"
+                                type="text"
+                                placeholder="Lorem Ipsum"
+                            ></input>
+                            <input
+                                class="input-normal w-full"
+                                type="text"
+                                placeholder="Lorem Ipsum"
+                            ></input>
+                            <input
+                                class="input-normal w-full"
+                                type="text"
+                                placeholder="Lorem Ipsum"
+                            ></input>
+                            <textarea
+                                id="w3review"
+                                name="w3review"
+                                rows="4"
+                                cols="50"
+                                class="input-normal w-full "
+                                placeholder="Lorem Ipsum"
+                            ></textarea>
+                            <button class="uppercase w-full h-[40px] mt-[15px] bg-black text-white">
+                                send
+                            </button>
+                        </div>
+                    </div>
+                    <div class=" h-[500px] w-1/2  ">
+                        <div class="flex flex-col mr-10 ml-10 items-center p-10">
+                            <h2>Lorem Ipsum</h2>
+                            {divsData.map(({ id, name, content }) => (
+                                <div
+                                    key={id}
+                                    className="my-2 w-full border-2 border-gray-300"
+                                >
+                                    <div
+                                        className="px-4 py-2  text-gray-400 w-full  cursor-pointer border-[1px] border-gray-300 "
+                                        onClick={() => toggleDiv(id)}
+                                    >
+                                        {openDivs.includes(id) ? (
+                                            <ion-icon
+                                                class="mr-2"
+                                                name="remove-outline"
+                                            ></ion-icon>
+                                        ) : (
+                                            <ion-icon
+                                                class="mr-2"
+                                                name="add-outline"
+                                            ></ion-icon>
+                                        )}
+
+                                        {name}
+                                    </div>
+                                    {openDivs.includes(id) && (
+                                        <div className="mt-2 p-4 text-[14px] text-gray-400">
+                                            {content}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-black w-full h-[220px] mt-[100px]"></footer>
         </body>
     );
 };
