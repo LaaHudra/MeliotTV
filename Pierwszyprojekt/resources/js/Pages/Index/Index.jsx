@@ -35,6 +35,22 @@ const Index = () => {
         </div>
     ));
 
+    const [openDivs, setOpenDivs] = useState([]);
+
+    const toggleDiv = (id) => {
+        setOpenDivs(
+            openDivs.includes(id)
+                ? openDivs.filter((i) => i !== id)
+                : [...openDivs, id]
+        );
+    };
+
+    const divsData = [
+        { id: 1, name: "Lorem Ipsum", content: "Lorem Ipsum 1" },
+        { id: 2, name: "Lorem Ipsum", content: "Lorem Ipsum 2" },
+        { id: 3, name: "Lorem Ipsum", content: "Lorem Ipsum 3" },
+    ];
+
     return (
         <body>
             <nav class="flex flex-row justify-between items-center w-full h-20  gap-4 pr-[120px] pl-[120px]">
@@ -160,9 +176,42 @@ const Index = () => {
             <div class="flex flex-row bg-red-500 w-full h-[100px] justify-center items-center">
                 Picture
             </div>
-            <div class="flex justify-center  w-full custom-height">
+            <div class="flex justify-center  w-full h-full">
                 <div class=" grid grid-cols-1 w-1/2  h-2/3 ">
                     <div class="bg-black p-2 mt-10">{tvlist}</div>
+                </div>
+            </div>
+            <div class="flex justify-center items-center w-full h-auto mt-[100px] p-10 ">
+                <div className="flex flex-col w-full  ">
+                    {divsData.map(({ id, name, content }) => (
+                        <div key={id} className="my-2 w-full">
+                            <div
+                                className="px-4 py-2  text-gray-400 w-full  cursor-pointer  border-b-2 border-gray-300"
+                                onClick={() => toggleDiv(id)}
+                            >
+                                {openDivs.includes(id) ? (
+                                    <ion-icon
+                                        class="mr-2"
+                                        name="arrow-up-circle-outline"
+                                    >
+                                        {" "}
+                                    </ion-icon>
+                                ) : (
+                                    <ion-icon
+                                        name="arrow-down-circle-outline"
+                                        class="mr-2"
+                                    ></ion-icon>
+                                )}
+
+                                {name}
+                            </div>
+                            {openDivs.includes(id) && (
+                                <div className="mt-2 p-4 text-[14px] text-gray-400">
+                                    {content}
+                                </div>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
             <footer class="bg-black w-full h-[220px]"></footer>
