@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use M3uParser\M3uParser as Parser;
+use App\Models\Channel;
+
 class M3uParser extends Command
 {
     /**
@@ -24,6 +26,7 @@ class M3uParser extends Command
     /**
      * Execute the console command.
      */
+   
     public function handle()
     {
         $m3uParser = new Parser();
@@ -31,11 +34,23 @@ class M3uParser extends Command
         $filePath = Storage::disk('public')->path('tv_channels_9948086841_plus.m3u');
         $data = $m3uParser->parseFile($filePath);
 
-        //print_r($data->getAttributes());
-        foreach ($data as $entry) {
-            print_r($entry);
-            exit;
+        if($data == null){
+            print_r("blad pobrania danych");
+        }else{
+            print_r("pobrano pomyslnie");
+            print_r($data->getAttributes());
+            foreach ($data as $entry) {
+                Channel::create([
+                    'title' => $entry->getTitle() ?? 'No title',
+                    'url' => $entry->getUrl(),
+                    'description' => $entry->getDescription() ?? null,
+                    'tags' => $entry->getTags() ?? null,
+                ]);
+              
+            }
+            $this->info('Data from M3U file has been successfully processed and stored.');
+
         }
-        die();
+       
     }
 }
