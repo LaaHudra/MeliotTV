@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00ca0babddd8b4e2bcd96ad6581d69be",
+    "content-hash": "687275983095053e2221c254c8b0de04",
     "packages": [
         {
             "name": "brick/math",
@@ -571,6 +571,55 @@
                 }
             ],
             "time": "2023-10-12T05:21:21+00:00"
+        },
+        {
+            "name": "gemorroj/m3u-parser",
+            "version": "5.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gemorroj/M3uParser.git",
+                "reference": "b78b68fb55bb4374a2dab7482c934dd2eddc2070"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gemorroj/M3uParser/zipball/b78b68fb55bb4374a2dab7482c934dd2eddc2070",
+                "reference": "b78b68fb55bb4374a2dab7482c934dd2eddc2070",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.41",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "M3uParser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Gemorroj"
+                }
+            ],
+            "description": "m3u playlist parser/generator",
+            "keywords": [
+                "m3u",
+                "m3u8",
+                "playlist"
+            ],
+            "support": {
+                "issues": "https://github.com/Gemorroj/M3uParser/issues",
+                "source": "https://github.com/Gemorroj/M3uParser/tree/5.5.0"
+            },
+            "time": "2023-12-22T13:47:59+00:00"
         },
         {
             "name": "graham-campbell/result-type",
