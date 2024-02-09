@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Index = () => {
+const Index = ({ channels }) => {
   const data = ["Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum"];
 
   const [menu, setMenu] = useState(false);

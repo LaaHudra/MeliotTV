@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use M3uParser\M3uParser as Parser;
 use App\Models\Channel;
+use App\Models\Country;
 
 class M3uParser extends Command
 {
@@ -34,23 +35,55 @@ class M3uParser extends Command
         $filePath = Storage::disk('public')->path('tv_channels_9948086841_plus.m3u');
         $data = $m3uParser->parseFile($filePath);
 
-        if($data == null){
-            print_r("blad pobrania danych");
-        }else{
-            print_r("pobrano pomyslnie");
-            print_r($data->getAttributes());
-            foreach ($data as $entry) {
-                Channel::create([
-                    'title' => $entry->getTitle() ?? 'No title',
-                    'url' => $entry->getUrl(),
-                    'description' => $entry->getDescription() ?? null,
-                    'tags' => $entry->getTags() ?? null,
-                ]);
-              
+
+        $count = 0;
+
+        foreach ($data as $entry) {
+            // print_r($entry);
+            if ($count >= 12) { // Przerwij pętlę po przetworzeniu 5 rekordów
+                break;
             }
-            $this->info('Data from M3U file has been successfully processed and stored.');
+
+
+            foreach ($entry->getExtTags() as $extTag) {
+                switch ($extTag) {
+                    case $extTag instanceof \M3uParser\Tag\ExtInf: 
+
+                        if ($extTag->hasAttribute('tvg-id')) { 
+                            echo $extTag->getAttribute('tvg-id') . "\n";
+                        }
+                        if ($extTag->hasAttribute('tvg-name')) { 
+                            $tvgName = $extTag->getAttribute('tvg-name');
+                            $tvgName = str_replace('#EXTINF:-1 tvg-id="" tvg-name="', '', $tvgName); 
+                            $tvgName = rtrim($tvgName, '"'); 
+
+                          
+                            $parts = explode('| ', $tvgName);
+                            $part1 = $parts[0] ?? ''; 
+                            $part2 = $parts[1] ?? ''; 
+
+                            echo $part1 . "\n"; 
+                            echo $part2 . "\n"; 
+
+                        }
+                        if ($extTag->hasAttribute('tvg-logo')) { 
+                            echo $extTag->getAttribute('tvg-logo') . "\n";
+                        }
+                        if ($extTag->hasAttribute('group-title')) { 
+                            echo $extTag->getAttribute('group-title') . "\n";
+                        }
+                        echo("\n");
+                        echo("----------------------------------------------------------------");
+                        echo("\n");
+                 
+            }
+
+            
+         }
+
+         $count++;
 
         }
-       
+        }
     }
-}
+ 

@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Channel extends Model
+
+class Country extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'logo', 'country_id'];
+    protected $fillable = ['name', 'abbreviation'];
 
 }
