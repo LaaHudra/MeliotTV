@@ -45,7 +45,8 @@ class M3uParser extends Command
             $channelLogo = $extTags[0]->getAttribute('tvg-logo');
             $countryName = $extTags[0]->getAttribute('group-title');
             
-            $country = $cache[$countryName] ?? Country::firstOrCreate(['name' => $countryName, 'abbreviation' => $countryName]);            
+            $country = $cache[$countryName] ?? Country::firstOrCreate(['name' => $countryName, 'abbreviation' => $countryName]);         
+            $cache[$countryName] = $country;
             $channel = Channel::where('name', $channelName)->first();
             if (!$channel) {
                 // Jeśli kanał nie istnieje, utwórz nowy z powiązaniem do kraju

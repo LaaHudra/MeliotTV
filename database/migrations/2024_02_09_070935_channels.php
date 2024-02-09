@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('logo');
+            $table->text('logo');
             $table->unsignedBigInteger('country_id');
             $table->foreign('country_id')->references('id')->on('countries')->cascadeOnDelete();
             $table->timestamps();
