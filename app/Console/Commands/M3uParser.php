@@ -28,6 +28,8 @@ class M3uParser extends Command
      * Execute the console command.
      */
 
+    private $cache = [];
+    
     public function handle()
     {
         $m3uParser = new Parser();
@@ -42,8 +44,8 @@ class M3uParser extends Command
             $channelName = $extTags[0]->getAttribute('tvg-name');
             $channelLogo = $extTags[0]->getAttribute('tvg-logo');
             $countryName = $extTags[0]->getAttribute('group-title');
-
-            $country = Country::firstOrCreate(['name' => $countryName, 'abbreviation' => $countryName]);
+            
+            $country = $cache[$countryName] ?? Country::firstOrCreate(['name' => $countryName, 'abbreviation' => $countryName]);            
             $channel = Channel::where('name', $channelName)->first();
             if (!$channel) {
                 // Jeśli kanał nie istnieje, utwórz nowy z powiązaniem do kraju
