@@ -4,18 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Channel extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'logo', 'country_id'];
 
-    public function listings(): HasMany
+    public function country(): BelongsTo
     {
-        return $this->hasMany(
-            \App\Models\Country::class,
-            'country_id'
+        return $this->belongsTo(
+            \App\Models\Country::class
         );
     }
 }

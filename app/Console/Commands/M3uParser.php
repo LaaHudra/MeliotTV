@@ -27,63 +27,32 @@ class M3uParser extends Command
     /**
      * Execute the console command.
      */
-   
+
     public function handle()
     {
         $m3uParser = new Parser();
         $m3uParser->addDefaultTags();
         $filePath = Storage::disk('public')->path('tv_channels_9948086841_plus.m3u');
         $data = $m3uParser->parseFile($filePath);
+        $progressBar = $this->output->createProgressBar(count($data));
+        Country::query()->delete();
 
+        foreach ($data as $key => $entry) {
+            $extTags = $entry->getExtTags();
+            $channelName = $extTags[0]->getAttribute('tvg-name');
+            $channelLogo = $extTags[0]->getAttribute('tvg-logo');
+            $countryName = $extTags[0]->getAttribute('group-title');
 
-        $count = 0;
-
-        foreach ($data as $entry) {
-            // print_r($entry);
-            if ($count >= 12) { // Przerwij pętlę po przetworzeniu 5 rekordów
-                break;
+            $country = Country::firstOrCreate(['name' => $countryName, 'abbreviation' => $countryName]);
+            $channel = Channel::where('name', $channelName)->first();
+            if (!$channel) {
+                // Jeśli kanał nie istnieje, utwórz nowy z powiązaniem do kraju
+                $channel = new Channel(['name' => $channelName, 'logo' => $channelLogo]);
+                $channel->country()->associate($country);
+                $channel->save();
             }
-
-
-            foreach ($entry->getExtTags() as $extTag) {
-                switch ($extTag) {
-                    case $extTag instanceof \M3uParser\Tag\ExtInf: 
-
-                        if ($extTag->hasAttribute('tvg-id')) { 
-                            echo $extTag->getAttribute('tvg-id') . "\n";
-                        }
-                        if ($extTag->hasAttribute('tvg-name')) { 
-                            $tvgName = $extTag->getAttribute('tvg-name');
-                            $tvgName = str_replace('#EXTINF:-1 tvg-id="" tvg-name="', '', $tvgName); 
-                            $tvgName = rtrim($tvgName, '"'); 
-
-                          
-                            $parts = explode('| ', $tvgName);
-                            $part1 = $parts[0] ?? ''; 
-                            $part2 = $parts[1] ?? ''; 
-
-                            echo $part1 . "\n"; 
-                            echo $part2 . "\n"; 
-
-                        }
-                        if ($extTag->hasAttribute('tvg-logo')) { 
-                            echo $extTag->getAttribute('tvg-logo') . "\n";
-                        }
-                        if ($extTag->hasAttribute('group-title')) { 
-                            echo $extTag->getAttribute('group-title') . "\n";
-                        }
-                        echo("\n");
-                        echo("----------------------------------------------------------------");
-                        echo("\n");
-                 
-            }
-
-            
-         }
-
-         $count++;
-
+            $progressBar->advance();
         }
-        }
+        $progressBar->finish();
     }
- 
+}
