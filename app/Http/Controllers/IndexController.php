@@ -13,7 +13,14 @@ class IndexController extends Controller
 
     public function __invoke(Request $request)
     { 
-        return Inertia::render('Index/Index');
+
+        $countries = Country::all();
+        $channels = Channel::all();
+
+        return Inertia::render('Index/Index', [
+            'countries' => $countries,
+            'channels' => $channels,
+        ]);
 
     }
 }

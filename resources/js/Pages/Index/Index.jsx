@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Index = ({ channels }) => {
+const Index = ({ countries, channels }) => {
   const data = ["Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum"];
 
   const [menu, setMenu] = useState(false);
@@ -83,7 +83,32 @@ const Index = ({ channels }) => {
       </div>
       <div class="flex justify-center  w-full h-full">
         <div class=" grid grid-cols-1 w-1/2  h-2/3 ">
-          <div class="bg-black p-2 mt-10">{tvlist}</div>
+          <div class="bg-black p-2 mt-10">
+            <div>
+              <h1>Countries</h1>
+              <ul>
+                {countries.map((country) => (
+                  <li key={country.id}>
+                    {country.name} ({country.abbreviation})
+                  </li>
+                ))}
+              </ul>
+
+              <h1>Channels</h1>
+              <ul>
+                {channels.map((channel) => (
+                  <li key={channel.id}>
+                    {channel.name} -{" "}
+                    <img
+                      src={channel.logo}
+                      alt={channel.name}
+                      style={{ width: "50px" }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
       <div class="flex justify-center items-center w-full h-auto mt-[20px] p-10 ">
