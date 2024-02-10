@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "@inertiajs/inertia-react";
+import { Inertia } from "@inertiajs/inertia";
 
-const Index = ({ countries, channels }) => {
-  const data = ["Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum"];
-
-  const [menu, setMenu] = useState(false);
-  const [active, setActive] = useState(false);
-
-  const tvlist = data.map((tv) => (
-    <div class="flex w-full items-center h-[50px] border-[2px] mb-2 border-green-400">
-      <div class="flex ml-2 w-[70px] h-[46px] bg-red-300">Picture</div>
-      <div class="ml-10 text-white">{tv}</div>
-    </div>
-  ));
-
+const Index = ({ countries }) => {
   const [openDivs, setOpenDivs] = useState([]);
 
   const toggleDiv = (id) => {
@@ -33,6 +23,15 @@ const Index = ({ countries, channels }) => {
     { id: 2, name: "Lorem Ipsum", content: "Lorem Ipsum 2" },
     { id: 3, name: "Lorem Ipsum", content: "Lorem Ipsum 3" },
   ];
+
+  const [channels, setChannels] = useState([]);
+
+  const handleCountrySelect = async (country_id) => {
+    const response = await fetch(`/?country_id=${country_id}`);
+    const channels = await response.json();
+
+    setChannels(channels);
+  };
 
   return (
     <body>
@@ -82,31 +81,52 @@ const Index = ({ countries, channels }) => {
         Picture
       </div>
       <div class="flex justify-center  w-full h-full">
-        <div class=" grid grid-cols-1 w-1/2  h-2/3 ">
-          <div class="bg-black p-2 mt-10">
-            <div>
-              <h1>Countries</h1>
-              <ul>
+        <div class=" grid grid-cols-1 w-2/3  h-2/3 ">
+          <div class="bg-black p-2 mt-10 text-white">
+            {/* <div className="flex">
+              <div className="w-1/2 h-800px overflow-auto">
+                <ul>
+                  {countries.map((country) => (
+                    <li
+                      key={country.id}
+                      onClick={() => handleCountrySelect(country.id)}
+                    >
+                      {country.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="w-1/2  overflow-auto bg-red-800 text-black">
+                <ul>
+                  {channels.map((channels) => (
+                    <li key={channels.id}>{channels.name}</li>
+                  ))}
+                </ul>
+              </div>
+            </div> */}
+            <div className="flex w-full h-[800px] ">
+              <div className="flex flex-col w-1/2 overflow-auto">
                 {countries.map((country) => (
-                  <li key={country.id}>
-                    {country.name} ({country.abbreviation})
-                  </li>
+                  <button
+                    key={country.id}
+                    className="m-1 p-[18px] border-b border-gray-800 last:border-b-0 text-left"
+                    onClick={() => handleCountrySelect(country.id)}
+                  >
+                    {country.name}
+                  </button>
                 ))}
-              </ul>
-
-              <h1>Channels</h1>
-              <ul>
-                {channels.map((channel) => (
-                  <li key={channel.id}>
-                    {channel.name} -{" "}
-                    <img
-                      src={channel.logo}
-                      alt={channel.name}
-                      style={{ width: "50px" }}
-                    />
-                  </li>
+              </div>
+              <div className="flex flex-col w-1/2 overflow-auto">
+                {channels.map((channels) => (
+                  <div
+                    key={channels.id}
+                    className="m-1 p-[18px] border-b border-gray-800 last:border-b-0 flex items-center"
+                  >
+                    <img class="h-8" src={channels.logo} />
+                    <div class="ml-3">{channels.name}</div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -143,7 +163,7 @@ const Index = ({ countries, channels }) => {
       </div>
 
       <div class=" w-full h-[500px] mt-[20px]  flex justify-center items-center">
-        <div class="w-2/3 flex">
+        <div class="w-2/3 flex justify-center">
           <div class=" h-[500px] w-1/2  ">
             <div class="flex flex-col mr-10 ml-10 items-center p-10">
               <h2>Contat us</h2>
@@ -177,32 +197,6 @@ const Index = ({ countries, channels }) => {
               <button class="uppercase w-full h-[40px] mt-[15px] bg-black text-white">
                 send
               </button>
-            </div>
-          </div>
-          <div class=" h-[500px] w-1/2  ">
-            <div class="flex flex-col mr-10 ml-10 items-center p-10">
-              <h2>Lorem Ipsum</h2>
-              {divsData.map(({ id, name, content }) => (
-                <div key={id} className="my-2 w-full border-2 border-gray-300">
-                  <div
-                    className="px-4 py-2  text-gray-400 w-full  cursor-pointer border-[1px] border-gray-300 "
-                    onClick={() => toggleDiv(id)}
-                  >
-                    {openDivs.includes(id) ? (
-                      <ion-icon class="mr-2" name="remove-outline"></ion-icon>
-                    ) : (
-                      <ion-icon class="mr-2" name="add-outline"></ion-icon>
-                    )}
-
-                    {name}
-                  </div>
-                  {openDivs.includes(id) && (
-                    <div className="mt-2 p-4 text-[14px] text-gray-400">
-                      {content}
-                    </div>
-                  )}
-                </div>
-              ))}
             </div>
           </div>
         </div>
