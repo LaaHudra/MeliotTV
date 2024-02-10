@@ -86,9 +86,12 @@ const Index = ({ countries }) => {
           <div class="bg-black p-2 mt-10 text-white">
             <div>
               <div className="flex w-full h-[800px] ">
-                <ul className="flex flex-col w-1/2 overflow-auto">
-                  <li class="text-[26px] m-1 p-[18px]  text-left">
-                    Categories
+                <ul className="flex flex-col w-1/3 overflow-auto">
+                  <li class="text-[24px] m-1 p-[18px]  text-left flex items-center">
+                    <p>Categories</p>
+                    <p class="ml-4 bg-[#535353] p-1 rounded-xl justify-center">
+                      {countries.length}
+                    </p>
                   </li>
 
                   <input
@@ -108,18 +111,18 @@ const Index = ({ countries }) => {
                     .map((country) => (
                       <li
                         key={country.id}
-                        class="m-1 p-[18px] border-b border-gray-800 last:border-b-0 text-left"
+                        class="m-1 p-[18px] border-b border-gray-900 last:border-b-0 text-left"
                         onClick={() => handleCountrySelect(country.id)}
                       >
                         {country.name}
                       </li>
                     ))}
                 </ul>
-                <ul class="flex flex-col w-1/2 overflow-auto">
+                <ul class="flex flex-col w-2/3 overflow-auto">
                   {channels.map((channel) => (
                     <li
                       key={channel.id}
-                      class="m-1 p-[18px] border-b border-gray-800 last:border-b-0 flex items-center"
+                      class="m-1 p-[18px] border-b border-gray-900 last:border-b-0 flex items-center"
                     >
                       <img
                         src={channel.logo}
