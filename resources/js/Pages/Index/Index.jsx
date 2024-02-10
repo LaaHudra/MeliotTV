@@ -25,6 +25,7 @@ const Index = ({ countries }) => {
   ];
 
   const [channels, setChannels] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleCountrySelect = async (country_id) => {
     const response = await fetch(`/?country_id=${country_id}`);
@@ -83,49 +84,52 @@ const Index = ({ countries }) => {
       <div class="flex justify-center  w-full h-full">
         <div class=" grid grid-cols-1 w-2/3  h-2/3 ">
           <div class="bg-black p-2 mt-10 text-white">
-            {/* <div className="flex">
-              <div className="w-1/2 h-800px overflow-auto">
-                <ul>
-                  {countries.map((country) => (
+            <div>
+              <div className="flex w-full h-[800px] ">
+                <ul className="flex flex-col w-1/2 overflow-auto">
+                  <li class="text-[26px] m-1 p-[18px]  text-left">
+                    Categories
+                  </li>
+
+                  <input
+                    type="text"
+                    placeholder="Search for content..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    class="m-1 bg-transparent border-none text-left"
+                  />
+
+                  {countries
+                    .filter((country) =>
+                      country.name
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
+                    )
+                    .map((country) => (
+                      <li
+                        key={country.id}
+                        class="m-1 p-[18px] border-b border-gray-800 last:border-b-0 text-left"
+                        onClick={() => handleCountrySelect(country.id)}
+                      >
+                        {country.name}
+                      </li>
+                    ))}
+                </ul>
+                <ul class="flex flex-col w-1/2 overflow-auto">
+                  {channels.map((channel) => (
                     <li
-                      key={country.id}
-                      onClick={() => handleCountrySelect(country.id)}
+                      key={channel.id}
+                      class="m-1 p-[18px] border-b border-gray-800 last:border-b-0 flex items-center"
                     >
-                      {country.name}
+                      <img
+                        src={channel.logo}
+                        alt="Channel Logo"
+                        className="h-8"
+                      />
+                      <div className="ml-3">{channel.name}</div>
                     </li>
                   ))}
                 </ul>
-              </div>
-              <div className="w-1/2  overflow-auto bg-red-800 text-black">
-                <ul>
-                  {channels.map((channels) => (
-                    <li key={channels.id}>{channels.name}</li>
-                  ))}
-                </ul>
-              </div>
-            </div> */}
-            <div className="flex w-full h-[800px] ">
-              <div className="flex flex-col w-1/2 overflow-auto">
-                {countries.map((country) => (
-                  <button
-                    key={country.id}
-                    className="m-1 p-[18px] border-b border-gray-800 last:border-b-0 text-left"
-                    onClick={() => handleCountrySelect(country.id)}
-                  >
-                    {country.name}
-                  </button>
-                ))}
-              </div>
-              <div className="flex flex-col w-1/2 overflow-auto">
-                {channels.map((channels) => (
-                  <div
-                    key={channels.id}
-                    className="m-1 p-[18px] border-b border-gray-800 last:border-b-0 flex items-center"
-                  >
-                    <img class="h-8" src={channels.logo} />
-                    <div class="ml-3">{channels.name}</div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
