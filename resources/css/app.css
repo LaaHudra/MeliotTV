@@ -26,7 +26,11 @@ a {
     color: black;
     transition: color 0.3s ease-out;
 }
-
+#channel-list {
+    background-image: url("/images/background.jpeg");
+    background-size: 100% auto;
+    @apply pb-16;
+}
 .underline-animation::after {
     content: "";
     position: absolute;

@@ -1,0 +1,21 @@
+{
+  "resources/js/Pages/Index/Index.jsx": {
+    "file": "assets/Index-H_AT0yRn.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Index/Index.jsx"
+  },
+  "resources/js/app.jsx": {
+    "css": [
+      "assets/app-Gn9LKhnd.css"
+    ],
+    "dynamicImports": [
+      "resources/js/Pages/Index/Index.jsx"
+    ],
+    "file": "assets/app-_UtHwAak.js",
+    "isEntry": true,
+    "src": "resources/js/app.jsx"
+  }
+}
