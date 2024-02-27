@@ -18,3 +18,4 @@ use App\Http\Controllers\IndexController;
 */
 
 Route::get('/', IndexController::class);
+Route::get('/index/search', [IndexController::class, 'search']);

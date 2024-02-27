@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
 
-const Index = ({ countries }) => {
+const Index = ({ input }) => {
   const [openDivs, setOpenDivs] = useState([]);
 
   const toggleDiv = (id) => {
@@ -23,87 +23,137 @@ const Index = ({ countries }) => {
     { id: 2, name: "Lorem Ipsum", content: "Lorem Ipsum 2" },
     { id: 3, name: "Lorem Ipsum", content: "Lorem Ipsum 3" },
   ];
-
   const [channels, setChannels] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [isSearching, setIsSearching] = useState(false);
+  
+  useEffect(() => {
+    console.log(input)
+    // Check if `input` is defined and not null
+    if (input !== undefined && input !== null) {
+      setCountries(input);
+    }
+  }, [input]); // Dependency array, this effect runs whenever `input` changes
+  
+  
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (searchTerm) {
+        setIsSearching(true);
+        fetch(`/index/search?query=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+              setIsSearching(false);
+              setChannels(data.channels)
+              setCountries(data.countries)
+              console.log(data); // Process your search results here
+            })
+            .catch(error => {
+              setIsSearching(false);
+              console.error('Error fetching search results:', error);
+            });
+      }
+    }, 500); // Adjust debounce time as needed
+    
+    return () => clearTimeout(timerId); // Cleanup timeout on component unmount or when searchTerm changes
+  }, [searchTerm]);
+  
   const handleCountrySelect = async (country_id) => {
     const response = await fetch(`/?country_id=${country_id}`);
     const channels = await response.json();
 
     setChannels(channels);
   };
+  
+  const toggleMobileMenu = () => {
+    const mobileMenu = document.querySelector('#menu');
+    mobileMenu.classList.toggle('max-lg:hidden');
+  }
 
   return (
     <body>
-      <nav class="flex flex-row justify-between items-center w-full my-3 gap-4 pr-[120px] pl-[120px]">
-        <div class="flex w-[200px] bg-purple-500  items-center justify-center">
+      <nav className="flex flex-row justify-between items-center w-full my-3 gap-4 container mx-auto relative">
+        <div className="flex w-[200px] bg-purple-500  items-center justify-center">
           <img alt={'logo'} src={'/images/logo.jpg'} />
         </div>
-        <div class="flex w-auto">
-          <div class="w-auto h-10 flex items-center justify-center ml-4 mr-4 gap-10">
-            <a href="#channel-list" className="!text-white underline-animation underline-offset-8	">
+        <div className="flex w-auto">
+          <div className={'lg:hidden'}>
+            <a href={'#'} className={'!text-white underline-animation underline-offset-8'}
+               onClick={() => toggleMobileMenu()}
+            >
+              <img alt={'logo'} src={'/images/hamburger.svg'} className={'w-12'}/>
+            </a>
+          </div>
+          <div id="menu" className="max-lg:hidden max-lg:flex max-lg:flex-col max-lg:w-1/3  max-lg:h-full max-lg:mx-0 max-lg:bg-white max-lg:fixed max-lg:top-0 max-lg:right-0 w-auto h-10 flex items-center justify-center ml-4 mr-4 gap-10 relative">
+            <div className={'cursor-pointer p-6 absolute top-2 right-2 text-2xl lg:hidden'} onClick={() => toggleMobileMenu()}>
+              X
+            </div>
+            <a href="#channel-list" className="text-white max-lg:text-black underline-animation underline-offset-8	">
               Channel List
             </a>
-            <a href="#faq" className="!text-white underline-animation underline-offset-8	">
+            <a href="#faq" className="text-white max-lg:text-black underline-animation underline-offset-8	">
               FAQ
             </a>
-            <a href="#contact-us" className="!text-white underline-animation underline-offset-8	">
+            <a href="#contact-us" className="text-white max-lg:text-black underline-animation underline-offset-8	">
               Contact Us
             </a>
           </div>
         </div>
       </nav>
-      <div id="channel-list" class="flex justify-center w-full h-full">
-        <div class=" grid grid-cols-1 w-2/3  h-2/3 ">
-          <div class="bg-black bg-opacity-75 p-2 mt-10 text-white">
+      <div id="channel-list" className="flex justify-center w-full h-full">
+        <div className=" grid grid-cols-1 container  h-2/3 ">
+          <div className="bg-black bg-opacity-75 p-2 mt-10 text-white">
             <div>
-              <div className="flex w-full h-[800px] ">
-                <ul className="flex flex-col w-1/3 overflow-auto">
-                  <li class="text-[24px] m-1 p-[18px]  text-left flex items-center">
+              <input
+                  type="text"
+                  placeholder="Search for content..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="mb-2 bg-transparent border-none text-left w-full bg-white bg-opacity-50"
+              />
+              <div className="max-md:flex-col max-md:gap-4 flex w-full h-[800px] ">
+                <ul className="flex flex-col max-md:w-full max-md:h-1/2 w-1/3 overflow-auto">
+                  <li className="text-[24px] m-1 p-[18px]  text-left flex items-center">
                     <p>Categories</p>
-                    <p class="ml-4 bg-[#535353] p-1 rounded-xl justify-center">
+                    <p className="ml-4 bg-[#535353] p-1 rounded-xl justify-center">
                       {countries.length}
                     </p>
                   </li>
-
-                  <input
-                    type="text"
-                    placeholder="Search for content..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    class="m-1 bg-transparent border-none text-left"
-                  />
-
+                  
                   {countries
-                    .filter((country) =>
-                      country.name
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
-                    )
-                    .map((country) => (
-                      <li
-                        key={country.id}
-                        class="m-1 p-[18px] border-b border-gray-900 last:border-b-0 text-left"
-                        onClick={() => handleCountrySelect(country.id)}
-                      >
-                        {country.name}
-                      </li>
-                    ))}
+                      .filter((country) =>
+                          true
+                      )
+                      .map((country) => (
+                          <li
+                              key={country.id}
+                              className="m-1 p-[18px] border-b border-gray-900 last:border-b-0 text-left cursor-pointer"
+                              onClick={() => handleCountrySelect(country.id)}
+                          >
+                            {country.name}
+                          </li>
+                      ))}
                 </ul>
-                <ul class="flex flex-col w-2/3 overflow-auto">
+                <ul className="flex flex-col max-md:w-full max-md:h-1/2 w-2/3 overflow-auto max-md:border-t-2 max-md:border-white">
+                  <li className="text-[24px] m-1 p-[18px]  text-left flex items-center">
+                    <p>Channels</p>
+                    <p className="ml-4 bg-[#535353] p-1 rounded-xl justify-center">
+                      {channels.length}
+                    </p>
+                  </li>
                   {channels.map((channel) => (
-                    <li
-                      key={channel.id}
-                      class="m-1 p-[18px] border-b border-gray-900 last:border-b-0 flex items-center"
-                    >
-                      <img
-                        src={channel.logo}
-                        alt="Channel Logo"
-                        className="h-8"
-                      />
-                      <div className="ml-3">{channel.name}</div>
-                    </li>
+                      <li
+                          key={channel.id}
+                          className="m-1 p-[18px] border-b border-gray-900 last:border-b-0 flex items-center"
+                      >
+                        <img
+                            src={channel.logo}
+                            alt="Channel Logo"
+                            className="h-8"
+                        />
+                        <div className="ml-3">{channel.name}</div>
+                      </li>
                   ))}
                 </ul>
               </div>
@@ -111,22 +161,22 @@ const Index = ({ countries }) => {
           </div>
         </div>
       </div>
-      <div class="flex mx-auto max-w-screen-md justify-center items-center w-full h-auto py-16 ">
+      <div className="flex mx-auto max-w-screen-md justify-center items-center w-full h-auto py-16 ">
         <div className="flex flex-col w-full  ">
-          {aboutUs.map(({ id, name, content }) => (
-            <div key={id} className="my-2 w-full">
+          {aboutUs.map(({id, name, content}) => (
+              <div key={id} className="my-2 w-full">
               <div
                 className="px-4 py-2  text-gray-400 w-full  cursor-pointer  border-b-2 border-gray-300"
                 onClick={() => toggleDiv(id)}
               >
                 {openDivs.includes(id) ? (
-                  <ion-icon class="mr-2" name="arrow-up-circle-outline">
+                  <ion-icon className="mr-2" name="arrow-up-circle-outline">
                     {"Answer"}
                   </ion-icon>
                 ) : (
                   <ion-icon
                     name="arrow-down-circle-outline"
-                    class="mr-2"
+                    className="mr-2"
                   ></ion-icon>
                 )}
 

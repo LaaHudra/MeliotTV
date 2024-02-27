@@ -21,8 +21,18 @@ class IndexController extends Controller
 
     
         return Inertia::render('Index/Index', [
-            'countries' => $countries,
+            'input' => $countries,
             'channels' => $channels,
         ]);
+    }
+    
+    
+    public function search(Request $request)
+    {
+        $channels = Channel::where('name', 'like', "%{$request->input('query')}%")
+                           ->get(['name', 'logo', 'country_id']);
+        $countries = $channels->pluck('country_id')->unique();
+        $countries = Country::whereIn('id', $countries)->get(['id', 'name']);
+        return response()->json(['channels' => $channels, 'countries'=> $countries]);
     }
 }
