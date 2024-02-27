@@ -121,7 +121,7 @@ Error generating stack: `+i.message+`
 
 Please specify a more appropriate element using the "as" attribute. For example:
 
-<Link href="${r}" method="${o}" as="button">...</Link>`),ge.createElement(t,{...E,...t==="a"?{href:r}:{},ref:T,onClick:k},e)});dE.displayName="InertiaLink";async function pE(e,t){for(const n of Array.isArray(e)?e:[e]){const r=t[n];if(!(typeof r>"u"))return typeof r=="function"?r():r}throw new Error(`Page not found: ${e}`)}const hE="Laravel";fE({title:e=>`${e} - ${hE}`,resolve:e=>pE(`./Pages/${e}.jsx`,Object.assign({"./Pages/Index/Index.jsx":()=>km(()=>import("./Index-H_AT0yRn.js"),__vite__mapDeps([]))})),setup({el:e,App:t,props:n}){Fh(e).render(Gm.jsx(t,{...n}))},progress:{color:"#4B5563"}});export{yE as a,O1 as c,Gm as j,bf as l,ge as r};
+<Link href="${r}" method="${o}" as="button">...</Link>`),ge.createElement(t,{...E,...t==="a"?{href:r}:{},ref:T,onClick:k},e)});dE.displayName="InertiaLink";async function pE(e,t){for(const n of Array.isArray(e)?e:[e]){const r=t[n];if(!(typeof r>"u"))return typeof r=="function"?r():r}throw new Error(`Page not found: ${e}`)}const hE="Laravel";fE({title:e=>`${e} - ${hE}`,resolve:e=>pE(`./Pages/${e}.jsx`,Object.assign({"./Pages/Index/Index.jsx":()=>km(()=>import("./Index-f8n2AXO6.js"),__vite__mapDeps([]))})),setup({el:e,App:t,props:n}){Fh(e).render(Gm.jsx(t,{...n}))},progress:{color:"#4B5563"}});export{yE as a,O1 as c,Gm as j,bf as l,ge as r};
 function __vite__mapDeps(indexes) {
   if (!__vite__mapDeps.viteFileDeps) {
     __vite__mapDeps.viteFileDeps = []

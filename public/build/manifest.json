@@ -1,6 +1,6 @@
 {
   "resources/js/Pages/Index/Index.jsx": {
-    "file": "assets/Index-H_AT0yRn.js",
+    "file": "assets/Index-f8n2AXO6.js",
     "imports": [
       "resources/js/app.jsx"
     ],
@@ -9,12 +9,12 @@
   },
   "resources/js/app.jsx": {
     "css": [
-      "assets/app-Gn9LKhnd.css"
+      "assets/app-OTrREEk7.css"
     ],
     "dynamicImports": [
       "resources/js/Pages/Index/Index.jsx"
     ],
-    "file": "assets/app-_UtHwAak.js",
+    "file": "assets/app-ptnPeu36.js",
     "isEntry": true,
     "src": "resources/js/app.jsx"
   }
